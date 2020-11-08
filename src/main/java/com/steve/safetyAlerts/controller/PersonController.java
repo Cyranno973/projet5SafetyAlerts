@@ -1,6 +1,7 @@
 package com.steve.safetyAlerts.controller;
 
 import com.steve.safetyAlerts.dto.ChildInfo;
+import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,6 @@ public class PersonController {
     private IPersonService personService ;
     // private IFireStationService fireStationService;
 
-    @GetMapping(path="phoneAlert1")
-    public Collection<String> getPhoneAlert(){
-        return personService.getPhoneAlert1();
-    }
-
     @GetMapping(path="phoneAlert")
     public Collection<String> getPhoneAlert(@RequestParam String station){
         return personService.getPhoneAlert(station);
@@ -33,6 +29,10 @@ public class PersonController {
     @GetMapping(path="childAlert")
     public Collection<ChildInfo> getChildAlert(@RequestParam String address){
         return personService.getChildAlert(address);
+    }
+    @GetMapping("personInfo")
+    public PersonInfo getPersonInfo(@RequestParam String firstName, String lastName){
+        return personService.getPersonInfo(firstName,lastName);
     }
 }
 

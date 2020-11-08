@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class DataRepository {
@@ -39,11 +41,12 @@ public class DataRepository {
     }
 
     public Collection<Person> getAllPersons() {
-        Collection<Person> personCollection = new ArrayList<>();
-        for (Person person : database.getPersons()) {
-            personCollection.add(person);
-        }
-        return personCollection;
+        return database.getPersons();
+    }
+    public List<Person> getPersonByLastName(String lastName){
+        return getAllPersons().stream()
+                .filter(person -> person.getLastName().equalsIgnoreCase(lastName))
+                .collect(Collectors.toList());
     }
 
     public Collection<Person> getPersonsByAddress(String address) {
@@ -75,16 +78,24 @@ public class DataRepository {
         return medicalRecordCollection;
     }
 
-    public Collection<MedicalRecord> getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
-        Collection<MedicalRecord> medicalRecordCollection = new ArrayList<>();
+    public List<MedicalRecord> getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
+        List<MedicalRecord> medicalRecordList= new ArrayList<>();
         for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
             if (medicalRecord.getFirstName().equalsIgnoreCase(firstName) && medicalRecord.getLastName().equalsIgnoreCase(lastName)) {
-                medicalRecordCollection.add(medicalRecord);
+                medicalRecordList.add(medicalRecord);
             }
         }
-//        System.out.println(medicalRecordCollection);
-        return medicalRecordCollection;
+        return medicalRecordList;
     }
+    public MedicalRecord getMedicalRecordByFirstNameAndLastNamessss(String firstName, String lastName) {
+        for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
+            if (medicalRecord.getFirstName().equalsIgnoreCase(firstName) && medicalRecord.getLastName().equalsIgnoreCase(lastName)) {
+                return medicalRecord;
+            }
+        }
+        return null;
+    }
+
 
 
     public static void main(String[] args) throws IOException {

@@ -1,6 +1,8 @@
 package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.dto.ChildInfo;
+import com.steve.safetyAlerts.dto.Homonyme;
+import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
@@ -29,15 +31,6 @@ public class PersonServiceImpl implements IPersonService {
             collectionEmails.add(person.getEmail());
         }
         return collectionEmails;
-    }
-
-    @Override
-    public Collection<String> getPhoneAlert1() {
-        Collection<String> collectionPhoneNumber = new ArrayList<>();
-        for (Person person : dataRepository.getAllPersons()) {
-            collectionPhoneNumber.add(person.getPhone());
-        }
-        return collectionPhoneNumber;
     }
 
     @Override
@@ -85,4 +78,34 @@ public class PersonServiceImpl implements IPersonService {
         }
         return childInfoCollection;
     }
+
+    @Override
+    public PersonInfo getPersonInfo(String firstName, String lastName) {
+
+        final List<Person> personByLastName = dataRepository.getPersonByLastName(lastName);
+        PersonInfo personInfo = new PersonInfo();
+        for (Person person : personByLastName) {
+            if (firstName.equalsIgnoreCase(person.getFirstName())) {
+
+                personInfo.setFirstName(person.getFirstName());
+                personInfo.setLastName(person.getLastName());
+                personInfo.setAddres(person.getAddress());
+                personInfo.setEmail(person.getEmail());
+
+                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastNamessss(firstName, lastName);
+
+                age = CalculateAge.personAge(medicalRecord.getBirthdate());
+
+                personInfo.setAge(age);
+                personInfo.setAllergies(medicalRecord.getAllergies());
+                personInfo.setMedications(medicalRecord.getMedications());
+            } else {
+                Homonyme homonyme = new Homonyme(person.getFirstName(), person.getLastName());
+                personInfo.getHomonymes().add(homonyme);
+            }
+        }
+        return personInfo;
+    }
 }
+
+
