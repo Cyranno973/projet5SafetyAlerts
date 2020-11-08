@@ -86,6 +86,7 @@ public class DataRepository {
         return medicalRecordCollection;
     }
 
+
     public static void main(String[] args) throws IOException {
         DataRepository dataRepository = new DataRepository();
         System.out.println(dataRepository.database);
