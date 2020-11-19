@@ -1,6 +1,7 @@
 package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.dto.ChildInfo;
+import com.steve.safetyAlerts.dto.FirePerson;
 import com.steve.safetyAlerts.dto.Homonyme;
 import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.model.FireStation;
@@ -31,47 +32,39 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public Collection<String> getPhoneAlert(String station) {
-        Collection<String> collectionStationNumber = new ArrayList<>();
+    public List<String> getPhoneAlert(String station) {
+        List<String> ListStationNumber = new ArrayList<>();
 
         for (FireStation fireStation : dataRepository.getAddressFireStationByStation(station)) {
             for (Person person : dataRepository.getAllPersons()) {
                 if (fireStation.getAddress().equalsIgnoreCase(person.getAddress())) {
-                    collectionStationNumber.add(person.getPhone());
+                    ListStationNumber.add(person.getPhone());
                 }
             }
         }
-        return collectionStationNumber;
+        return ListStationNumber;
     }
 
     @Override
-    public Collection<ChildInfo> getChildAlert(String address) {
+    public List<ChildInfo> getChildAlert(String address) {
+        List<Person> personList = dataRepository.getPersonsByAddress(address);
+        List<ChildInfo> childInfoCollection = new ArrayList<>();
+        List<String> familyList = new ArrayList<>();
+        for (Person person : personList) {
+            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastNamessss(person.getFirstName(), person.getLastName());
+            int age = CalculateAge.personAge(medicalRecord.getBirthdate());
+            ChildInfo childInfo = new ChildInfo();
+            if (age <= 18) {
+                childInfo.setFirstName(person.getFirstName());
+                childInfo.setLastName(person.getLastName());
+                childInfo.setAge(age);
+                childInfoCollection.add(childInfo);
 
-        Collection<ChildInfo> childInfoCollection = new ArrayList<>();
-        List<String> personList = new ArrayList<>();
-        for (Person person : dataRepository.getPersonsByAddress(address)) {
-            for (MedicalRecord medicalRecord : dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName())) {
-                ChildInfo childInfo = new ChildInfo();
-
-                if (person != null && person.getLastName().equals(person.getLastName())) {
-//                        System.out.println("Meme nom "+medicalRecord.getLastName());
-                    String member = person.getFirstName() + " " + person.getLastName();
-                    personList.add(member);
-                    childInfo.setFamilyMember(personList);
-                }
-                age = CalculateAge.personAge(medicalRecord.getBirthdate());
-//                    System.out.println(medicalRecord.getFirstName()+age);
-
-
-                if (age <= 18) {
-
-//                    System.out.println("ici 1 :"+medicalRecord.getFirstName());
-                    childInfo.setFirstName(medicalRecord.getFirstName());
-                    childInfo.setLastName(medicalRecord.getLastName());
-                    childInfo.setAge(age);
-                    childInfoCollection.add(childInfo);
-                }
+            } else {
+                familyList.add(person.getFirstName());
+                System.out.println(person.getFirstName());
             }
+                childInfo.setFamilyMember(familyList);
         }
         return childInfoCollection;
     }
@@ -102,6 +95,11 @@ public class PersonServiceImpl implements IPersonService {
             }
         }
         return personInfo;
+    }
+
+    @Override
+    public List<FirePerson> getFire(String address) {
+        return null;
     }
 }
 

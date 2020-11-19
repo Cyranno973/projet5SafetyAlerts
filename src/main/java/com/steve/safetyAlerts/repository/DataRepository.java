@@ -36,35 +36,38 @@ public class DataRepository {
                 .collect(Collectors.toList());
     }
 
+    /**
+     *
+     * @return Retourne la list de toute les personnes
+     */
     public List<Person> getAllPersons() {
         return database.getPersons();
     }
 
+    /**
+     * @param lastName
+     * @return Retourne la list de toute les personnesdu meme nom
+     */
     public List<Person> getPersonByLastName(String lastName){
         return getAllPersons().stream()
                 .filter(person -> person.getLastName().equalsIgnoreCase(lastName))
                 .collect(Collectors.toList());
     }
 
-    public Collection<Person> getPersonsByAddress(String address) {
-        Collection<Person> personCollection = new ArrayList<>();
-        for (Person person : database.getPersons()) {
-            if (person.getAddress().equalsIgnoreCase(address)) {
-                personCollection.add(person);
-            }
-        }
-//        System.out.println(personCollection);
-        return personCollection;
+    /**
+     * @param address
+     * @return Retourne la list de toute les address
+     */
+    public List<Person> getPersonsByAddress(String address) {
+        return database.getPersons().stream()
+                .filter(person -> person.getAddress().equalsIgnoreCase(address))
+                .collect(Collectors.toList());
     }
 
-    public Collection<FireStation> getAddressFireStationByStation(String station) {
-        Collection<FireStation> fireStationCollection = new ArrayList<>();
-        for (FireStation fireStation : database.getFirestations()) {
-            if (fireStation.getStation().equalsIgnoreCase(station)) {
-                fireStationCollection.add(fireStation);
-            }
-        }
-        return fireStationCollection;
+    public List<FireStation> getAddressFireStationByStation(String station) {
+        return database.getFirestations().stream()
+                .filter(fireStation -> fireStation.getStation().equalsIgnoreCase(station))
+                .collect(Collectors.toList());
     }
 
     public Collection<MedicalRecord> getAllMedicalRecord() {
