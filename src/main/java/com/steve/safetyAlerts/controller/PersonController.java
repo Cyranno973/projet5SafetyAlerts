@@ -2,6 +2,7 @@ package com.steve.safetyAlerts.controller;
 
 import com.steve.safetyAlerts.dto.ChildInfo;
 import com.steve.safetyAlerts.dto.FirePerson;
+import com.steve.safetyAlerts.dto.Foyer;
 import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class PersonController {
         return personService.getFire(address);
     }
     @GetMapping("flood")
-    public List<FirePerson> getFlood(@RequestParam List<String> stationNumber){
-        return personService.getFloodStation(stationNumber);
+    public List<Foyer> getFlood(@RequestParam List<String> stationNumbers){
+        return personService.getFloodStation(stationNumbers);
     }
 }
 

@@ -37,7 +37,6 @@ public class DataRepository {
     }
 
     /**
-     *
      * @return Retourne la list de toute les personnes
      */
     public List<Person> getAllPersons() {
@@ -48,7 +47,7 @@ public class DataRepository {
      * @param lastName
      * @return Retourne la list de toute les personnesdu meme nom
      */
-    public List<Person> getPersonByLastName(String lastName){
+    public List<Person> getPersonByLastName(String lastName) {
         return getAllPersons().stream()
                 .filter(person -> person.getLastName().equalsIgnoreCase(lastName))
                 .collect(Collectors.toList());
@@ -100,11 +99,22 @@ public class DataRepository {
         return null;
     }
 
-
-
-    public static void main(String[] args) throws IOException {
-        DataRepository dataRepository = new DataRepository();
-        System.out.println(dataRepository.database);
+    public List<String> getListFireStation(List<String> stations) {
+        return database.getFirestations().stream()
+                .filter(fireStation -> stations.contains(fireStation.getStation()))
+                .map(FireStation::getAddress)            //.map(fireStation -> fireStation.getAddress())
+                .collect(Collectors.toList());
     }
+
+//    public List<String> getListFireStationss(List<String> stations) {
+//        List<String> adress = new ArrayList<>();
+//        for (FireStation fireStation : database.getFirestations()){
+//            if (stations.contains(fireStation.getStation())){
+//                adress.add(fireStation.getAddress());
+//            }
+//        }
+//        return adress;
+//
+//    }
 }
 

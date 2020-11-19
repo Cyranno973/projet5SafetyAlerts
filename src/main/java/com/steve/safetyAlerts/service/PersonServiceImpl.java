@@ -1,9 +1,6 @@
 package com.steve.safetyAlerts.service;
 
-import com.steve.safetyAlerts.dto.ChildInfo;
-import com.steve.safetyAlerts.dto.FirePerson;
-import com.steve.safetyAlerts.dto.Homonyme;
-import com.steve.safetyAlerts.dto.PersonInfo;
+import com.steve.safetyAlerts.dto.*;
 import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
@@ -114,8 +111,17 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public List<FirePerson> getFloodStation(List<String> stationNumber) {
-        return null;
+    public List<Foyer> getFloodStation(List<String> stationNumbers) {
+       List<String> listAddress = dataRepository.getListFireStation(stationNumbers);
+       List<Foyer> foyerList = new ArrayList<>();
+       for (String address : listAddress){
+          List<FirePerson> firePersonList = getFire(address);
+           Foyer foyer = new Foyer();
+           foyer.setAddress(address);
+           foyer.setFirePersons(firePersonList);
+           foyerList.add(foyer);
+       }
+        return foyerList;
     }
 }
 

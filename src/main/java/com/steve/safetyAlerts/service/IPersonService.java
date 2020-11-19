@@ -2,6 +2,7 @@ package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.dto.ChildInfo;
 import com.steve.safetyAlerts.dto.FirePerson;
+import com.steve.safetyAlerts.dto.Foyer;
 import com.steve.safetyAlerts.dto.PersonInfo;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface IPersonService {
 
     List<FirePerson> getFire(String address);
 
-    List<FirePerson> getFloodStation(List<String> stationNumber);
+    List<Foyer> getFloodStation(List<String> stationNumbers);
 }
