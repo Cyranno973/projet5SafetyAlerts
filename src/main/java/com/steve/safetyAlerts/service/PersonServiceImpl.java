@@ -11,10 +11,7 @@ import com.steve.safetyAlerts.utility.CalculateAge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PersonServiceImpl implements IPersonService {
@@ -24,13 +21,13 @@ public class PersonServiceImpl implements IPersonService {
     private DataRepository dataRepository;
 
     @Override
-    public Collection<String> getCommunityEmail(String city) {
-        Collection<String> collectionEmails = new HashSet<String>();
+    public Set<String> getCommunityEmail(String city) {
+        Set<String> listEmails = new HashSet<String>();
 
         for (Person person : dataRepository.getPersonsByCity(city)) {
-            collectionEmails.add(person.getEmail());
+            listEmails.add(person.getEmail());
         }
-        return collectionEmails;
+        return listEmails;
     }
 
     @Override

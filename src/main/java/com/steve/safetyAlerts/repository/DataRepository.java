@@ -30,19 +30,16 @@ public class DataRepository {
     }
 
     //methode pour recuperer les personnes par ville
-    public Collection<Person> getPersonsByCity(String city) {
-        Collection<Person> personCollection = new ArrayList<>();
-        for (Person person : database.getPersons()) {
-            if (person.getCity().equalsIgnoreCase(city)) {
-                personCollection.add(person);
-            }
-        }
-        return personCollection;
+    public List<Person> getPersonsByCity(String city) {
+        return getAllPersons().stream()
+                .filter(person -> person.getCity().equalsIgnoreCase(city))
+                .collect(Collectors.toList());
     }
 
-    public Collection<Person> getAllPersons() {
+    public List<Person> getAllPersons() {
         return database.getPersons();
     }
+
     public List<Person> getPersonByLastName(String lastName){
         return getAllPersons().stream()
                 .filter(person -> person.getLastName().equalsIgnoreCase(lastName))
