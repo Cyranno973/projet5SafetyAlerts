@@ -42,5 +42,9 @@ public class PersonController {
     public List<FirePerson> getFire(@RequestParam String address){
         return personService.getFire(address);
     }
+    @GetMapping("flood")
+    public List<FirePerson> getFlood(@RequestParam List<String> stationNumber){
+        return personService.getFloodStation(stationNumber);
+    }
 }
 

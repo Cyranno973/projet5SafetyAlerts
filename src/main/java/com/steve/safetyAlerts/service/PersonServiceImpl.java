@@ -34,7 +34,6 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public List<String> getPhoneAlert(String station) {
         List<String> ListStationNumber = new ArrayList<>();
-
         for (FireStation fireStation : dataRepository.getAddressFireStationByStation(station)) {
             for (Person person : dataRepository.getAllPersons()) {
                 if (fireStation.getAddress().equalsIgnoreCase(person.getAddress())) {
@@ -51,7 +50,7 @@ public class PersonServiceImpl implements IPersonService {
         List<ChildInfo> childInfoCollection = new ArrayList<>();
         List<String> familyList = new ArrayList<>();
         for (Person person : personList) {
-            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastNamessss(person.getFirstName(), person.getLastName());
+            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
             int age = CalculateAge.personAge(medicalRecord.getBirthdate());
             ChildInfo childInfo = new ChildInfo();
             if (age <= 18) {
@@ -62,9 +61,8 @@ public class PersonServiceImpl implements IPersonService {
 
             } else {
                 familyList.add(person.getFirstName());
-                System.out.println(person.getFirstName());
             }
-                childInfo.setFamilyMember(familyList);
+            childInfo.setFamilyMember(familyList);
         }
         return childInfoCollection;
     }
@@ -82,7 +80,7 @@ public class PersonServiceImpl implements IPersonService {
                 personInfo.setAddres(person.getAddress());
                 personInfo.setEmail(person.getEmail());
 
-                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastNamessss(firstName, lastName);
+                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(firstName, lastName);
 
                 age = CalculateAge.personAge(medicalRecord.getBirthdate());
 
@@ -99,6 +97,24 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public List<FirePerson> getFire(String address) {
+        List<FirePerson> firePersonList = new ArrayList<>();
+        for (Person person : dataRepository.getPersonsByAddress(address)) {
+            FirePerson firePerson = new FirePerson();
+            firePerson.setFirstname(person.getFirstName());
+            firePerson.setLastName(person.getLastName());
+            firePerson.setPhone(person.getPhone());
+            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+            firePerson.setAllergies(medicalRecord.getAllergies());
+            firePerson.setMedications(medicalRecord.getMedications());
+            firePerson.setAge(CalculateAge.personAge(medicalRecord.getBirthdate()));
+            firePerson.setStation(dataRepository.getStationFireStationByAddress(address).getStation());
+            firePersonList.add(firePerson);
+        }
+        return firePersonList;
+    }
+
+    @Override
+    public List<FirePerson> getFloodStation(List<String> stationNumber) {
         return null;
     }
 }

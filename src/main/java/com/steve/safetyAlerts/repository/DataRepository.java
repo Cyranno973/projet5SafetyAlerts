@@ -64,30 +64,34 @@ public class DataRepository {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @param station
+     * @return Retourne la list de toute les address trouver par station
+     */
     public List<FireStation> getAddressFireStationByStation(String station) {
         return database.getFirestations().stream()
                 .filter(fireStation -> fireStation.getStation().equalsIgnoreCase(station))
                 .collect(Collectors.toList());
     }
 
-    public Collection<MedicalRecord> getAllMedicalRecord() {
-        Collection<MedicalRecord> medicalRecordCollection = new ArrayList<>();
-        for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
-//            medicalRecordCollection.add(medicalRecord);
-        }
-        return medicalRecordCollection;
-    }
-
-    public List<MedicalRecord> getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
-        List<MedicalRecord> medicalRecordList= new ArrayList<>();
-        for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
-            if (medicalRecord.getFirstName().equalsIgnoreCase(firstName) && medicalRecord.getLastName().equalsIgnoreCase(lastName)) {
-                medicalRecordList.add(medicalRecord);
+    /**
+     * @param address
+     * @return Retourne la list de toute les address trouver par station
+     */
+    public FireStation getStationFireStationByAddress(String address) {
+        for (FireStation fireStation : database.getFirestations()) {
+            if (fireStation.getAddress().equalsIgnoreCase(address)) {
+                return fireStation;
             }
         }
-        return medicalRecordList;
+        return null;
     }
-    public MedicalRecord getMedicalRecordByFirstNameAndLastNamessss(String firstName, String lastName) {
+
+    /**
+     * @param firstName, lastName
+     * @return Retourne le medicalrecod d'une personnne au travers de son prénom et nom
+     */
+    public MedicalRecord getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
         for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
             if (medicalRecord.getFirstName().equalsIgnoreCase(firstName) && medicalRecord.getLastName().equalsIgnoreCase(lastName)) {
                 return medicalRecord;

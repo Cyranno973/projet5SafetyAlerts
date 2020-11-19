@@ -18,4 +18,6 @@ public interface IPersonService {
     PersonInfo getPersonInfo(String firstName, String lastName);
 
     List<FirePerson> getFire(String address);
+
+    List<FirePerson> getFloodStation(List<String> stationNumber);
 }
