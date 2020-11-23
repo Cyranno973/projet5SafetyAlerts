@@ -65,31 +65,33 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public PersonInfo getPersonInfo(String firstName, String lastName) {
+    public List<PersonInfo> getPersonInfo(String firstName, String lastName) {
 
-        final List<Person> personByLastName = dataRepository.getPersonByLastName(lastName);
-        PersonInfo personInfo = new PersonInfo();
-        for (Person person : personByLastName) {
-            if (firstName.equalsIgnoreCase(person.getFirstName())) {
+        List<PersonInfo> personInfoList = new ArrayList<>();
 
-                personInfo.setFirstName(person.getFirstName());
-                personInfo.setLastName(person.getLastName());
-                personInfo.setAddres(person.getAddress());
-                personInfo.setEmail(person.getEmail());
+        for (Person person : dataRepository.getListPersonByName(firstName, lastName)) {
 
-                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(firstName, lastName);
+            PersonInfo personInfo = new PersonInfo();
+            personInfo.setFirstName(person.getFirstName());
+            personInfo.setLastName(person.getLastName());
+            personInfo.setAddres(person.getAddress());
+            personInfo.setEmail(person.getEmail());
 
-                age = CalculateAge.personAge(medicalRecord.getBirthdate());
+            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(personInfo.getFirstName(), personInfo.getLastName());
 
-                personInfo.setAge(age);
-                personInfo.setAllergies(medicalRecord.getAllergies());
-                personInfo.setMedications(medicalRecord.getMedications());
-            } else {
-                Homonyme homonyme = new Homonyme(person.getFirstName(), person.getLastName());
-                personInfo.getHomonymes().add(homonyme);
-            }
+            age = CalculateAge.personAge(medicalRecord.getBirthdate());
+
+            personInfo.setAge(age);
+            personInfo.setAllergies(medicalRecord.getAllergies());
+            personInfo.setMedications(medicalRecord.getMedications());
+            personInfoList.add(personInfo);
+//
+//            else {
+//                Homonyme homonyme = new Homonyme(person.getFirstName(), person.getLastName());
+//                personInfo.getHomonymes().add(homonyme);
+//            }
         }
-        return personInfo;
+        return personInfoList;
     }
 
     @Override

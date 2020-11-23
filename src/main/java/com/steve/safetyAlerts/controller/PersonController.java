@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ public class PersonController {
     }
 
     @GetMapping("personInfo")
-    public PersonInfo getPersonInfo(@RequestParam String firstName, String lastName){
+    public List<PersonInfo> getPersonInfo(@RequestParam(required = false) String firstName, @RequestParam @Valid String lastName){
         return personService.getPersonInfo(firstName,lastName);
     }
     @GetMapping("fire")

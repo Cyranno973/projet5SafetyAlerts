@@ -11,19 +11,19 @@ public class PersonInfo {
     private String email;
     private List<String> medications = new ArrayList<>();
     private List<String> allergies = new ArrayList<>();
-    private List<Homonyme> homonymes = new ArrayList<>();
+//    private List<Homonyme> homonymes = new ArrayList<>();
 
     public String getFirstName() {
         return firstName;
     }
 
-    public List<Homonyme> getHomonymes() {
-        return homonymes;
-    }
-
-    public void setHomonymes(List<Homonyme> homonymes) {
-        this.homonymes = homonymes;
-    }
+//    public List<Homonyme> getHomonymes() {
+//        return homonymes;
+//    }
+//
+//    public void setHomonymes(List<Homonyme> homonymes) {
+//        this.homonymes = homonymes;
+//    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

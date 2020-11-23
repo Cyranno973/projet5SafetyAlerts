@@ -91,12 +91,13 @@ public class DataRepository {
      * @return Retourne le medicalrecod d'une personnne au travers de son prénom et nom
      */
     public MedicalRecord getMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
+        MedicalRecord medicalRecordResult = new MedicalRecord();
         for (MedicalRecord medicalRecord : database.getMedicalrecords()) {
             if (medicalRecord.getFirstName().equalsIgnoreCase(firstName) && medicalRecord.getLastName().equalsIgnoreCase(lastName)) {
-                return medicalRecord;
+                medicalRecordResult = medicalRecord;
             }
         }
-        return null;
+        return medicalRecordResult;
     }
 
     public List<String> getListFireStation(List<String> stations) {
@@ -124,6 +125,16 @@ public class DataRepository {
                 .collect(Collectors.toList());
         System.out.println(lol);
         return lol;
+    }
+
+    public List<Person> getListPersonByName(String firstName, String lastName) {
+        List<Person> personList = new ArrayList<>();
+        for (Person person : database.getPersons()) {
+            if ((firstName == null || (person.getFirstName().equalsIgnoreCase(firstName))) && (lastName == null || person.getLastName().equalsIgnoreCase(lastName))) {
+                personList.add(person);
+            }
+        }
+        return personList;
     }
 }
 

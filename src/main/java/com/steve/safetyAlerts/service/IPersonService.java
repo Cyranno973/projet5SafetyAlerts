@@ -13,7 +13,7 @@ public interface IPersonService {
 
     List<ChildInfo> getChildAlert(String address);
 
-    PersonInfo getPersonInfo(String firstName, String lastName);
+    List<PersonInfo> getPersonInfo(String firstName, String lastName);
 
     List<FirePerson> getFire(String address);
 
