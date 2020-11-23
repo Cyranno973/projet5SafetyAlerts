@@ -112,16 +112,28 @@ public class PersonServiceImpl implements IPersonService {
 
     @Override
     public List<Foyer> getFloodStation(List<String> stationNumbers) {
-       List<String> listAddress = dataRepository.getListFireStation(stationNumbers);
-       List<Foyer> foyerList = new ArrayList<>();
-       for (String address : listAddress){
-          List<FirePerson> firePersonList = getFire(address);
-           Foyer foyer = new Foyer();
-           foyer.setAddress(address);
-           foyer.setFirePersons(firePersonList);
-           foyerList.add(foyer);
-       }
+        List<String> listAddress = dataRepository.getListFireStation(stationNumbers);
+        List<Foyer> foyerList = new ArrayList<>();
+        for (String address : listAddress) {
+            List<FirePerson> firePersonList = getFire(address);
+            Foyer foyer = new Foyer();
+            foyer.setAddress(address);
+            foyer.setFirePersons(firePersonList);
+            foyerList.add(foyer);
+        }
         return foyerList;
+    }
+
+    @Override
+    public Coverage fireStation(String stationNumber) {
+        List<String> listAddress = dataRepository.getListFireStationAddress(stationNumber);
+        List<Coverage> coverageList = new ArrayList<>();
+        Coverage coverage = new Coverage();
+        List<FirePerson> firePersonList = new ArrayList<>();
+        for (String address : listAddress) {
+            coverage.setFirePersons(firePersonList);
+        }
+        return coverage;
     }
 }
 

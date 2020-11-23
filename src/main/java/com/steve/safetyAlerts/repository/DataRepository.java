@@ -116,5 +116,14 @@ public class DataRepository {
 //        return adress;
 //
 //    }
+
+    public List<String> getListFireStationAddress(String station) {
+        List<String> lol = database.getFirestations().stream()
+                .filter(fireStation -> fireStation.getStation().equals(station))
+                .map(FireStation::getAddress)
+                .collect(Collectors.toList());
+        System.out.println(lol);
+        return lol;
+    }
 }
 
