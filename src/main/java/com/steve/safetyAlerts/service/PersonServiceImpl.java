@@ -132,9 +132,12 @@ public class PersonServiceImpl implements IPersonService {
         List<Coverage> coverageList = new ArrayList<>();
         Coverage coverage = new Coverage();
         List<FirePerson> firePersonList = new ArrayList<>();
+
         for (String address : listAddress) {
-            coverage.setFirePersons(firePersonList);
+            firePersonList = getFire(address);
+//            coverageList.add(firePersonList);
         }
+        coverage.setFirePersons(firePersonList);
         return coverage;
     }
 }
