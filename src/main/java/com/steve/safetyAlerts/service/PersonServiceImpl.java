@@ -31,7 +31,7 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public List<String> getPhoneAlert(String station) {
         List<String> ListStationNumber = new ArrayList<>();
-        for (FireStation fireStation : dataRepository.getAddressFireStationByStation(station)) {
+        for (FireStation fireStation : dataRepository.getFireStationByStation(station)) {
             for (Person person : dataRepository.getAllPersons()) {
                 if (fireStation.getAddress().equalsIgnoreCase(person.getAddress())) {
                     ListStationNumber.add(person.getPhone());
@@ -127,18 +127,34 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public Coverage fireStation(String stationNumber) {
-        List<String> listAddress = dataRepository.getListFireStationAddress(stationNumber);
+    public List<Coverage> getCoverageByFireStation(String stationNumber) {
+        List<FireStation> listFireStation = dataRepository.getFireStationByStation(stationNumber);
         List<Coverage> coverageList = new ArrayList<>();
-        Coverage coverage = new Coverage();
-        List<FirePerson> firePersonList = new ArrayList<>();
+        int adultCount = 0;
+        int childCount = 0;
 
-        for (String address : listAddress) {
-            firePersonList = getFire(address);
-//            coverageList.add(firePersonList);
+        for (FireStation fireStation : listFireStation) {
+            List<Person> personListByAddress = dataRepository.getPersonsByAddress(fireStation.getAddress());
+            for (Person person : personListByAddress) {
+                Coverage coverage = new Coverage();
+                coverage.setLastname(person.getLastName());
+                coverage.setFirstName(person.getFirstName());
+                coverage.setAddress(person.getAddress());
+                coverage.setPhone(person.getPhone());
+                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
+                int age = CalculateAge.personAge(medicalRecord.getBirthdate());
+
+                if (age <= 18) {
+                    childCount++;
+                } else {
+                    adultCount++;
+                }
+                coverage.setNombreAdulte(adultCount);
+                coverage.setNombreEnfant(childCount);
+                coverageList.add(coverage);
+            }
         }
-        coverage.setFirePersons(firePersonList);
-        return coverage;
+        return coverageList;
     }
 }
 

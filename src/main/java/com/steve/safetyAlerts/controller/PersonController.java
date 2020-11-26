@@ -47,6 +47,6 @@ public class PersonController {
     public List<Foyer> getFlood(@RequestParam List<String> stationNumbers){ return personService.getFloodStation(stationNumbers); }
 
     @GetMapping("firestation")
-    public Coverage fireStation(@RequestParam String stationNumber){ return personService.fireStation(stationNumber); }
+    public List<Coverage> getCoverageByFireStation(@RequestParam String stationNumber){ return personService.getCoverageByFireStation(stationNumber); }
 }
 

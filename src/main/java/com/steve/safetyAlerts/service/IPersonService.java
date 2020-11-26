@@ -19,5 +19,5 @@ public interface IPersonService {
 
     List<Foyer> getFloodStation(List<String> stationNumbers);
 
-    Coverage fireStation(String stationNumber);
+    List<Coverage> getCoverageByFireStation(String stationNumber);
 }

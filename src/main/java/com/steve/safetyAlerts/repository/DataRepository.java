@@ -67,7 +67,7 @@ public class DataRepository {
      * @param station
      * @return Retourne la list de toute les address trouver par station
      */
-    public List<FireStation> getAddressFireStationByStation(String station) {
+    public List<FireStation> getFireStationByStation(String station) {
         return database.getFirestations().stream()
                 .filter(fireStation -> fireStation.getStation().equalsIgnoreCase(station))
                 .collect(Collectors.toList());
@@ -118,14 +118,13 @@ public class DataRepository {
 //
 //    }
 
-    public List<String> getListFireStationAddress(String station) {
-        List<String> lol = database.getFirestations().stream()
-                .filter(fireStation -> fireStation.getStation().equals(station))
-                .map(FireStation::getAddress)
-                .collect(Collectors.toList());
-        System.out.println(lol);
-        return lol;
-    }
+//    public List<String> getListFireStationAddress(String station) {
+//        List<String> ListAdress = database.getFirestations().stream()
+//                .filter(fireStation -> fireStation.getStation().equals(station))
+//                .map(FireStation::getAddress)
+//                .collect(Collectors.toList());
+//        return ;
+//    }
 
     public List<Person> getListPersonByName(String firstName, String lastName) {
         List<Person> personList = new ArrayList<>();
