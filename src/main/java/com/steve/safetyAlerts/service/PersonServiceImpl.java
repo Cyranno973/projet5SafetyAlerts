@@ -150,7 +150,7 @@ public class PersonServiceImpl implements IPersonService {
                     adultCount++;
                 }
                 coverage.setNombreAdulte(adultCount);
-                coverage.setNombreEnfant(childCount);
+                 ;
                 coverageList.add(coverage);
             }
         }

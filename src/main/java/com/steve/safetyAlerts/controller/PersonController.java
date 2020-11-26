@@ -43,7 +43,7 @@ public class PersonController {
         return personService.getFire(address);
     }
 
-    @GetMapping("flood")
+    @GetMapping("flood/stations")
     public List<Foyer> getFlood(@RequestParam List<String> stationNumbers){ return personService.getFloodStation(stationNumbers); }
 
     @GetMapping("firestation")
