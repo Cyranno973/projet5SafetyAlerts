@@ -1,6 +1,8 @@
 package com.steve.safetyAlerts.service;
 
+import com.steve.safetyAlerts.dao.PersonDao;
 import com.steve.safetyAlerts.dto.*;
+import com.steve.safetyAlerts.exception.DataAlreadyExistException;
 import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
@@ -17,6 +19,34 @@ public class PersonServiceImpl implements IPersonService {
 
     @Autowired
     private DataRepository dataRepository;
+
+    @Autowired
+    private PersonDao personDao;
+
+
+    @Override
+    public boolean createPerson(Person person) {
+        // verification que la person n'existe pas dans la DAO(datarepository)
+        if (!dataRepository.getAllPersons().contains(person)) {
+            personDao.createPerson(person);
+            return true;
+        } else {
+            throw new DataAlreadyExistException("La personne " + person.getFirstName() + " " + person.getLastName() + "existe déja");
+        }
+    }
+
+    @Override
+    public boolean updatePerson(Person person) {
+        if (!personDao.updatePerson(person)) {
+            throw new DataAlreadyExistException("La personne " + person.getFirstName() + " " + person.getLastName() + "n'existe pas");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deletePerson(Person person) {
+        return false;
+    }
 
     @Override
     public Set<String> getCommunityEmail(String city) {
@@ -150,12 +180,13 @@ public class PersonServiceImpl implements IPersonService {
                     adultCount++;
                 }
                 coverage.setNombreAdulte(adultCount);
-                 ;
+                ;
                 coverageList.add(coverage);
             }
         }
         return coverageList;
     }
+
 }
 
 

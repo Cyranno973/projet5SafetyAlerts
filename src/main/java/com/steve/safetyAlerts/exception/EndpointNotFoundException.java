@@ -1,4 +1,12 @@
 package com.steve.safetyAlerts.exception;
 
-public class EndpointNotFoundException {
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class EndpointNotFoundException extends RuntimeException{
+
+    public EndpointNotFoundException(String message) {
+        super(message);
+    }
 }

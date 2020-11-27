@@ -1,6 +1,7 @@
 package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.dto.*;
+import com.steve.safetyAlerts.model.Person;
 
 import java.util.List;
 import java.util.Set;
@@ -20,4 +21,10 @@ public interface IPersonService {
     List<Foyer> getFloodStation(List<String> stationNumbers);
 
     List<Coverage> getCoverageByFireStation(String stationNumber);
+
+    boolean createPerson(Person person);
+
+    boolean updatePerson(Person person);
+
+    boolean deletePerson(Person person);
 }

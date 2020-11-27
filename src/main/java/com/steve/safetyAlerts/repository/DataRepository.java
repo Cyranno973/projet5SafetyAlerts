@@ -10,9 +10,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +23,10 @@ public class DataRepository {
     private static final ObjectMapper objectMapper = new ObjectMapper();
     public static Database database;
     public String JSON_FILE = "data.json";
+    //log4j
     private static final Logger logger = LogManager.getLogger(DataRepository.class);
+    // On commit uniquement dans le main  et non dans le package test pour ne pas modifier le JSOn
+    private boolean commit = true;
 
     public DataRepository() throws IOException {
         this.init();
@@ -36,25 +38,46 @@ public class DataRepository {
     public void init() {
         try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(JSON_FILE)) {
             database = objectMapper.readerFor(Database.class).readValue(inputStream);
-            logger.info("OK - FILE_OPEN : "+ JSON_FILE);
+            logger.info("OK - FILE_OPEN : " + JSON_FILE);
 
         } catch (FileNotFoundException fnfe) {
 
-            logger.info("KO - FILE_NOT_FOUND : "+ JSON_FILE);
+            logger.info("KO - FILE_NOT_FOUND : " + JSON_FILE);
             throw new DataRepositoryException("KO - FILE_NOT_FOUND : ", fnfe);
 
         } catch (IOException ioe) {
 
-            logger.info("KO - I/O ERREUR : "+ JSON_FILE);
+            logger.info("KO - I/O ERREUR : " + JSON_FILE);
             throw new DataRepositoryException("KO - I/O ERREUR : ", ioe);
 
         }
     }
-    public void commit (){
 
+    public void commit() {
+        if(commit){
+            // recuperer le path du JSON
+            URL url = ClassLoader.getSystemResource(JSON_FILE);
+            // On ouvre un flux d'ecriture vers le fichier JSOn
+            try (OutputStream outputStream = new FileOutputStream(url.getFile())) {
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(outputStream, database);
+                logger.info("OK - Fichier JSON mise à jour: " + JSON_FILE);
+
+            } catch (FileNotFoundException fnfe) {
+
+                logger.info("KO - FILE_NOT_FOUND : " + JSON_FILE);
+                throw new DataRepositoryException("KO - FILE_NOT_FOUND : ", fnfe);
+
+            } catch (IOException ioe) {
+
+                logger.info("KO - I/O ERREUR : " + JSON_FILE);
+                throw new DataRepositoryException("KO - I/O ERREUR : ", ioe);
+
+            }
+        }
     }
-    public void setCommit(){
-
+    // cette methode donne l'autorisation de modifier la valeur de la variable commit
+    public void setCommit(boolean commit) {
+        this.commit = commit;
     }
 
 
