@@ -19,9 +19,6 @@ public class PersonController {
     // appel d'un service pour remonter les info (city) pour les reponses d'API
     @Autowired
     private IPersonService personService;
-    @Autowired
-    private IFireStationService fireStationService;
-    // private IFireStationService fireStationService;
 
     @GetMapping(path = "phoneAlert")
     public List<String> getPhoneAlert(@RequestParam String station) {
@@ -75,23 +72,5 @@ public class PersonController {
     public void deletePerson(@RequestBody @Valid Person person){
         personService.deletePerson(person);
     }
-
-    @PostMapping(path = "firestation")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createFireStation(@RequestBody @Valid FireStation firestation) {
-        fireStationService.createFireStation(firestation);
-    }
-
-//    @PutMapping(path="firestation")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void updatePerson(@RequestBody @Valid Person person){
-//        personService.updatePerson(person);
-//    }
-//
-//    @DeleteMapping(path="person")
-//    @ResponseStatus(HttpStatus.RESET_CONTENT)
-//    public void deletePerson(@RequestBody @Valid Person person){
-//        personService.deletePerson(person);
-//    }
 }
 

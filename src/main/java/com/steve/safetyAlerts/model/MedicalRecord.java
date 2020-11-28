@@ -1,6 +1,7 @@
 package com.steve.safetyAlerts.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MedicalRecord {
     private String firstName;
@@ -60,4 +61,18 @@ public class MedicalRecord {
     }
 
     private List<String> allergies;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MedicalRecord)) return false;
+        MedicalRecord that = (MedicalRecord) o;
+        return Objects.equals(getFirstName(), that.getFirstName()) &&
+                Objects.equals(getLastName(), that.getLastName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getFirstName(), getLastName());
+    }
 }

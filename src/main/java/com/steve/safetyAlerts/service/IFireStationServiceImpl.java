@@ -21,7 +21,7 @@ public class IFireStationServiceImpl implements IFireStationService {
     @Override
     public boolean createFireStation(FireStation fireStation) {
         // verification que la fireStation n'existe pas dans la DAO(datarepository)
-        if (!dataRepository.getAllPersons().contains(fireStation)) {
+        if (!dataRepository.database.getFireStations().contains(fireStation)) {
             fireStationDao.createFireStation(fireStation);
             return true;
         } else {

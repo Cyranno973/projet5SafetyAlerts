@@ -54,7 +54,7 @@ public class DataRepository {
     }
 
     public void commit() {
-        if(commit){
+        if (commit) {
             // recuperer le path du JSON
             URL url = ClassLoader.getSystemResource(JSON_FILE);
             // On ouvre un flux d'ecriture vers le fichier JSOn
@@ -75,6 +75,7 @@ public class DataRepository {
             }
         }
     }
+
     // cette methode donne l'autorisation de modifier la valeur de la variable commit
     public void setCommit(boolean commit) {
         this.commit = commit;
@@ -167,6 +168,16 @@ public class DataRepository {
             }
         }
         return personList;
+    }
+
+    public Person getPersonByName(String firstName, String lastName) {
+        Person personResult = new Person();
+        for (Person person : database.getPersons()) {
+            if (person.getFirstName().equalsIgnoreCase(firstName) && person.getLastName().equalsIgnoreCase(lastName)) {
+                personResult = person;
+            }
+        }
+        return personResult;
     }
 }
 

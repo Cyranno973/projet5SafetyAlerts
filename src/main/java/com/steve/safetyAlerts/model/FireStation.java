@@ -1,5 +1,7 @@
 package com.steve.safetyAlerts.model;
 
+import java.util.Objects;
+
 public class FireStation {
     private String address;
     private String station;
@@ -26,5 +28,14 @@ public class FireStation {
                 "address='" + address + '\'' +
                 ", station='" + station + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FireStation)) return false;
+        FireStation that = (FireStation) o;
+        return Objects.equals(getAddress(), that.getAddress()) &&
+                Objects.equals(getStation(), that.getStation());
     }
 }
