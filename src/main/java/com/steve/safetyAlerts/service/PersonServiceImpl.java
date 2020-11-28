@@ -3,6 +3,7 @@ package com.steve.safetyAlerts.service;
 import com.steve.safetyAlerts.dao.PersonDao;
 import com.steve.safetyAlerts.dto.*;
 import com.steve.safetyAlerts.exception.DataAlreadyExistException;
+import com.steve.safetyAlerts.exception.DataNotFoundException;
 import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
@@ -38,14 +39,17 @@ public class PersonServiceImpl implements IPersonService {
     @Override
     public boolean updatePerson(Person person) {
         if (!personDao.updatePerson(person)) {
-            throw new DataAlreadyExistException("La personne " + person.getFirstName() + " " + person.getLastName() + "n'existe pas");
+            throw new DataNotFoundException("La personne " + person.getFirstName() + " " + person.getLastName() + "n'existe pas");
         }
         return true;
     }
 
     @Override
     public boolean deletePerson(Person person) {
-        return false;
+        if (!personDao.deletePerson(person)) {
+            throw new DataNotFoundException("La personne " + person.getFirstName() + " " + person.getLastName() + "n'existe pas");
+        }
+        return true;
     }
 
     @Override

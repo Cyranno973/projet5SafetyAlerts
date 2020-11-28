@@ -1,7 +1,9 @@
 package com.steve.safetyAlerts.controller;
 
 import com.steve.safetyAlerts.dto.*;
+import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.Person;
+import com.steve.safetyAlerts.service.IFireStationService;
 import com.steve.safetyAlerts.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ public class PersonController {
     // appel d'un service pour remonter les info (city) pour les reponses d'API
     @Autowired
     private IPersonService personService;
+    @Autowired
+    private IFireStationService fireStationService;
     // private IFireStationService fireStationService;
 
     @GetMapping(path = "phoneAlert")
@@ -65,8 +69,29 @@ public class PersonController {
     public void updatePerson(@RequestBody @Valid Person person){
         personService.updatePerson(person);
     }
+
+    @DeleteMapping(path="person")
+    @ResponseStatus(HttpStatus.RESET_CONTENT)
+    public void deletePerson(@RequestBody @Valid Person person){
+        personService.deletePerson(person);
+    }
+
+    @PostMapping(path = "firestation")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createFireStation(@RequestBody @Valid FireStation firestation) {
+        fireStationService.createFireStation(firestation);
+    }
+
+//    @PutMapping(path="firestation")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void updatePerson(@RequestBody @Valid Person person){
+//        personService.updatePerson(person);
+//    }
 //
-//    @ResponseStatus(HttpStatus.RESET_CONTENT)
 //    @DeleteMapping(path="person")
+//    @ResponseStatus(HttpStatus.RESET_CONTENT)
+//    public void deletePerson(@RequestBody @Valid Person person){
+//        personService.deletePerson(person);
+//    }
 }
 

@@ -83,19 +83,19 @@ public class Person {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Person)) return false;
         Person person = (Person) o;
-        return Objects.equals(firstName, person.firstName) &&
-                Objects.equals(lastName, person.lastName) &&
-                Objects.equals(address, person.address) &&
-                Objects.equals(city, person.city) &&
-                Objects.equals(zip, person.zip) &&
-                Objects.equals(phone, person.phone) &&
-                Objects.equals(email, person.email);
+        return Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getLastName(), person.getLastName()) &&
+                Objects.equals(getAddress(), person.getAddress()) &&
+                Objects.equals(getCity(), person.getCity()) &&
+                Objects.equals(getZip(), person.getZip()) &&
+                Objects.equals(getPhone(), person.getPhone()) &&
+                Objects.equals(getEmail(), person.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName);
+        return Objects.hash(getFirstName(), getLastName());
     }
 }

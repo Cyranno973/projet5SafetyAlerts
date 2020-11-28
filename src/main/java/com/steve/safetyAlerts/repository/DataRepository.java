@@ -120,7 +120,7 @@ public class DataRepository {
      * @return Retourne la list de toute les address trouver par station
      */
     public List<FireStation> getFireStationByStation(String station) {
-        return database.getFirestations().stream()
+        return database.getFireStations().stream()
                 .filter(fireStation -> fireStation.getStation().equalsIgnoreCase(station))
                 .collect(Collectors.toList());
     }
@@ -130,7 +130,7 @@ public class DataRepository {
      * @return Retourne la list de toute les address trouver par station
      */
     public FireStation getStationFireStationByAddress(String address) {
-        for (FireStation fireStation : database.getFirestations()) {
+        for (FireStation fireStation : database.getFireStations()) {
             if (fireStation.getAddress().equalsIgnoreCase(address)) {
                 return fireStation;
             }
@@ -153,7 +153,7 @@ public class DataRepository {
     }
 
     public List<String> getListFireStation(List<String> stations) {
-        return database.getFirestations().stream()
+        return database.getFireStations().stream()
                 .filter(fireStation -> stations.contains(fireStation.getStation()))
                 .map(FireStation::getAddress)
                 .collect(Collectors.toList());

@@ -16,7 +16,7 @@ public class Database {
         this.persons = persons;
     }
 
-    public List<FireStation> getFirestations() {
+    public List<FireStation> getFireStations() {
         return firestations;
     }
 

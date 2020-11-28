@@ -1,13 +1,9 @@
-package com.steve.safetyAlerts.service;
+package com.steve.safetyAlerts.dao;
 
 import com.steve.safetyAlerts.model.FireStation;
-import com.steve.safetyAlerts.model.Person;
 
-public interface IFireStationService {
+public interface FirestationDao {
     boolean createFireStation(FireStation fireStation);
-
     boolean updateFireStation(FireStation fireStation);
-
     boolean deleteFireStation(FireStation fireStation);
-
 }

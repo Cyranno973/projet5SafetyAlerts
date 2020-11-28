@@ -33,6 +33,11 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public boolean deletePerson(Person person) {
-        return false;
+        // suppression de la person en memeoire
+        boolean result = dataRepository.database.getPersons().remove(person);
+        // commit pour appliquer les changements dans le json
+        dataRepository.commit();
+        return result;
+
     }
 }
