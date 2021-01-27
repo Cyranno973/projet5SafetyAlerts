@@ -1,7 +1,5 @@
 package com.steve.safetyAlerts.dto;
 
-import com.steve.safetyAlerts.model.Person;
-
 import java.util.List;
 
 public class ChildInfo {
