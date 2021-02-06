@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MedicalRecordDaoImpl implements IMedicalRecordDao {
+public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
     @Autowired
     private DataRepository dataRepository;

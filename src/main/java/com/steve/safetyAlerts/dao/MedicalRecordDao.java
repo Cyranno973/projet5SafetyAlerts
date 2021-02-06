@@ -2,7 +2,7 @@ package com.steve.safetyAlerts.dao;
 
 import com.steve.safetyAlerts.model.MedicalRecord;
 
-public interface IMedicalRecordDao {
+public interface MedicalRecordDao {
 
     boolean createMedicalRecord(MedicalRecord medicalRecord);
     boolean updateMedicalRecord(MedicalRecord medicalRecord);

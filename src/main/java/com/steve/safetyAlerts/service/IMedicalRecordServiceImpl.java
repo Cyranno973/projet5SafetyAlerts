@@ -1,6 +1,6 @@
 package com.steve.safetyAlerts.service;
 
-import com.steve.safetyAlerts.dao.IMedicalRecordDao;
+import com.steve.safetyAlerts.dao.MedicalRecordDao;
 import com.steve.safetyAlerts.exception.DataAlreadyExistException;
 import com.steve.safetyAlerts.exception.DataNotFoundException;
 import com.steve.safetyAlerts.model.MedicalRecord;
@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IMedicalRecordImpl implements IMedicalRecord {
+public class IMedicalRecordServiceImpl implements IMedicalRecordService {
     @Autowired
     private DataRepository dataRepository;
     @Autowired
-    private IMedicalRecordDao medicalRecordDao;
+    private MedicalRecordDao medicalRecordDao;
 
     @Override
     public void createMedicalRecord(MedicalRecord medicalRecord) {

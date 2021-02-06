@@ -1,7 +1,7 @@
 package com.steve.safetyAlerts.controller;
 
 import com.steve.safetyAlerts.model.MedicalRecord;
-import com.steve.safetyAlerts.service.IMedicalRecord;
+import com.steve.safetyAlerts.service.IMedicalRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import javax.validation.Valid;
 public class MedicalRecordController {
 
     @Autowired
-    private IMedicalRecord medicalRecordService;
+    private IMedicalRecordService medicalRecordService;
 
     @PostMapping(path = "medicalRecord")
     @ResponseStatus(HttpStatus.CREATED)
