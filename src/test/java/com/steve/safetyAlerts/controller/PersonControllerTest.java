@@ -232,15 +232,14 @@ public class PersonControllerTest {
         // + on vérifie que le statut de la réponse est 200
 
         mockMvc.perform(MockMvcRequestBuilders.get("/personInfo")
-                .param("lastname", "Boyd"))
+                .param("lastName", "Boyd")
+        )
                 .andExpect(MockMvcResultMatchers.status().isOk());
 
         // Etape 2 : on vérifie que le service a bien été appelé avec les bons
         // paramètres
 
-        Mockito.verify(iPersonService, Mockito.times(1)).getPersonInfo("Boyd",
-                null);
-
+        Mockito.verify(iPersonService, Mockito.times(1)).getPersonInfo(null, "Boyd");
     }
 
 }
