@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class MedicalRecordController {
@@ -33,4 +34,7 @@ public class MedicalRecordController {
         medicalRecordService.deleteMedicalRecord(firestation);
     }
 
+//    @GetMapping(path = "medicalRecord")
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<String> getmedicalRecord() { List<String> medicalrecord = medicalrecordService.getMedicalrecord(); return medicalrecord; }
 }

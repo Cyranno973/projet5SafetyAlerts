@@ -79,7 +79,7 @@ public class FirestationDaoImpl implements FirestationDao {
 
         }
 
-        // suppression de la fireStation en memeoire
+        // suppression de la fireStation en memoire
         boolean result = dataRepository.database.getFireStations().removeAll(fireStationListDeleted);
         // commit pour appliquer les changements dans le json
         dataRepository.commit();
