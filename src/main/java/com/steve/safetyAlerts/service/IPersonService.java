@@ -10,17 +10,9 @@ public interface IPersonService {
 
     Set<String> getCommunityEmail(String city);
 
-    List<String> getPhoneAlert(String station);
-
     List<ChildInfo> getChildAlert(String address);
 
     List<PersonInfo> getPersonInfo(String firstName, String lastName);
-
-    List<FirePerson> getFire(String address);
-
-    List<Foyer> getFloodStation(List<String> stationNumbers);
-
-    List<Coverage> getCoverageByFireStation(String stationNumber);
 
     boolean createPerson(Person person);
 

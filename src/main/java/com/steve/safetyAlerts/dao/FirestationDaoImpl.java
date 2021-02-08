@@ -54,7 +54,7 @@ public class FirestationDaoImpl implements FirestationDao {
             }
         }else {
 
-            // suppressiion by address
+            // suppressiion by address uniquement
             if (!"".equals(fireStation.getAddress()) && (fireStation.getAddress() != null)) {
 
                 for (FireStation fs : dataRepository.database.getFireStations()) {
@@ -65,7 +65,7 @@ public class FirestationDaoImpl implements FirestationDao {
             }
 
 
-            // suppressiion by station
+            // suppressiion by station uniquement
 
             if (!"".equals(fireStation.getStation()) && (fireStation.getStation() != null)) {
 

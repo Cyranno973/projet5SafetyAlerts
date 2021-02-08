@@ -115,6 +115,13 @@ public class DataRepository {
                 .filter(person -> person.getAddress().equalsIgnoreCase(address))
                 .collect(Collectors.toList());
     }
+    /**
+     * @param
+     * @return Retourne la list de toute les firestation
+     */
+    public List<FireStation> getListFirestation(){
+        return database.getFireStations();
+    }
 
     /**
      * @param station

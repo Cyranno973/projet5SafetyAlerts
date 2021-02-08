@@ -20,7 +20,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Autowired
     private DataRepository dataRepository;
-
+    
     @Autowired
     private PersonDao personDao;
 
@@ -60,19 +60,6 @@ public class PersonServiceImpl implements IPersonService {
             listEmails.add(person.getEmail());
         }
         return listEmails;
-    }
-
-    @Override
-    public List<String> getPhoneAlert(String station) {
-        List<String> ListStationNumber = new ArrayList<>();
-        for (FireStation fireStation : dataRepository.getFireStationByStation(station)) {
-            for (Person person : dataRepository.getAllPersons()) {
-                if (fireStation.getAddress().equalsIgnoreCase(person.getAddress())) {
-                    ListStationNumber.add(person.getPhone());
-                }
-            }
-        }
-        return ListStationNumber;
     }
 
     @Override
@@ -127,70 +114,6 @@ public class PersonServiceImpl implements IPersonService {
         }
         return personInfoList;
     }
-
-    @Override
-    public List<FirePerson> getFire(String address) {
-        List<FirePerson> firePersonList = new ArrayList<>();
-        for (Person person : dataRepository.getPersonsByAddress(address)) {
-            FirePerson firePerson = new FirePerson();
-            firePerson.setFirstname(person.getFirstName());
-            firePerson.setLastName(person.getLastName());
-            firePerson.setPhone(person.getPhone());
-            MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
-            firePerson.setAllergies(medicalRecord.getAllergies());
-            firePerson.setMedications(medicalRecord.getMedications());
-            firePerson.setAge(CalculateAge.personAge(medicalRecord.getBirthdate()));
-            firePerson.setStation(dataRepository.getStationFireStationByAddress(address).getStation());
-            firePersonList.add(firePerson);
-        }
-        return firePersonList;
-    }
-
-    @Override
-    public List<Foyer> getFloodStation(List<String> stationNumbers) {
-        List<String> listAddress = dataRepository.getListFireStation(stationNumbers);
-        List<Foyer> foyerList = new ArrayList<>();
-        for (String address : listAddress) {
-            List<FirePerson> firePersonList = getFire(address);
-            Foyer foyer = new Foyer();
-            foyer.setAddress(address);
-            foyer.setFirePersons(firePersonList);
-            foyerList.add(foyer);
-        }
-        return foyerList;
-    }
-
-    @Override
-    public List<Coverage> getCoverageByFireStation(String stationNumber) {
-        List<FireStation> listFireStation = dataRepository.getFireStationByStation(stationNumber);
-        List<Coverage> coverageList = new ArrayList<>();
-        int adultCount = 0;
-        int childCount = 0;
-
-        for (FireStation fireStation : listFireStation) {
-            List<Person> personListByAddress = dataRepository.getPersonsByAddress(fireStation.getAddress());
-            for (Person person : personListByAddress) {
-                Coverage coverage = new Coverage();
-                coverage.setLastname(person.getLastName());
-                coverage.setFirstName(person.getFirstName());
-                coverage.setAddress(person.getAddress());
-                coverage.setPhone(person.getPhone());
-                MedicalRecord medicalRecord = dataRepository.getMedicalRecordByFirstNameAndLastName(person.getFirstName(), person.getLastName());
-                int age = CalculateAge.personAge(medicalRecord.getBirthdate());
-
-                if (age <= 18) {
-                    childCount++;
-                } else {
-                    adultCount++;
-                }
-                coverage.setNombreAdulte(adultCount);
-                ;
-                coverageList.add(coverage);
-            }
-        }
-        return coverageList;
-    }
-
 }
 
 

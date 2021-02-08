@@ -24,7 +24,7 @@ import java.util.Set;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PersonControllerTest {
+public class ControllerPersonTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean

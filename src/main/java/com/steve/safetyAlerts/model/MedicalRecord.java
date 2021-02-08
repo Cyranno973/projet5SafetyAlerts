@@ -1,13 +1,17 @@
 package com.steve.safetyAlerts.model;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Objects;
 
 public class MedicalRecord {
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
     private String birthdate;
     private List<String> medications;
+    private List<String> allergies;
 
     @Override
     public String toString() {
@@ -60,7 +64,6 @@ public class MedicalRecord {
         this.allergies = allergies;
     }
 
-    private List<String> allergies;
 
     @Override
     public boolean equals(Object o) {

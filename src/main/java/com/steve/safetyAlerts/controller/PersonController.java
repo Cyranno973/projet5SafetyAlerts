@@ -1,9 +1,7 @@
 package com.steve.safetyAlerts.controller;
 
 import com.steve.safetyAlerts.dto.*;
-import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.Person;
-import com.steve.safetyAlerts.service.IFireStationService;
 import com.steve.safetyAlerts.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +18,6 @@ public class PersonController {
     @Autowired
     private IPersonService personService;
 
-    @GetMapping(path = "phoneAlert")
-    public List<String> getPhoneAlert(@RequestParam String station) {
-        return personService.getPhoneAlert(station);
-    }
-
     @GetMapping(path = "communityEmail")
     public Set<String> getCommunityEmail(@RequestParam String city) {
         return personService.getCommunityEmail(city);
@@ -38,21 +31,6 @@ public class PersonController {
     @GetMapping("personInfo")
     public List<PersonInfo> getPersonInfo(@RequestParam(required = false) String firstName, @RequestParam @Valid String lastName) {
         return personService.getPersonInfo(firstName, lastName);
-    }
-
-    @GetMapping("fire")
-    public List<FirePerson> getFire(@RequestParam String address) {
-        return personService.getFire(address);
-    }
-
-    @GetMapping("flood/stations")
-    public List<Foyer> getFlood(@RequestParam List<String> stationNumbers) {
-        return personService.getFloodStation(stationNumbers);
-    }
-
-    @GetMapping("firestation")
-    public List<Coverage> getCoverageByFireStation(@RequestParam String stationNumber) {
-        return personService.getCoverageByFireStation(stationNumber);
     }
 
     @PostMapping(path = "person")

@@ -1,12 +1,11 @@
 package com.steve.safetyAlerts.model;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
 public class FireStation {
-    @NotBlank
+
     private String address;
-    @NotBlank
+
     private String station;
 
     public String getAddress() {
