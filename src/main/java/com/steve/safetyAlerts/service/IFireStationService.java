@@ -25,6 +25,4 @@ public interface IFireStationService {
     List<Foyer> getFloodStation(List<String> stationNumbers);
 
 
-
-
 }

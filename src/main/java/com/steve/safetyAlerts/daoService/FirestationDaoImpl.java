@@ -1,4 +1,4 @@
-package com.steve.safetyAlerts.dao;
+package com.steve.safetyAlerts.daoService;
 
 import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.repository.DataRepository;
@@ -52,7 +52,7 @@ public class FirestationDaoImpl implements FirestationDao {
                     fireStationListDeleted.add(fs);
                 }
             }
-        }else {
+        } else {
 
             // suppressiion by address uniquement
             if (!"".equals(fireStation.getAddress()) && (fireStation.getAddress() != null)) {

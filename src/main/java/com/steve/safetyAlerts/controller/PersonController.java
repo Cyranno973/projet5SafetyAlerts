@@ -1,6 +1,7 @@
 package com.steve.safetyAlerts.controller;
 
-import com.steve.safetyAlerts.dto.*;
+import com.steve.safetyAlerts.dto.ChildInfo;
+import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +21,7 @@ public class PersonController {
     private IPersonService personService;
 
     @GetMapping(path = "communityEmail")
-    public Set<String> getCommunityEmail(@RequestParam String city) {
+    public Collection<String> getCommunityEmail(@RequestParam String city) {
         return personService.getCommunityEmail(city);
     }
 
@@ -39,15 +41,15 @@ public class PersonController {
         personService.createPerson(person);
     }
 
-    @PutMapping(path="person")
+    @PutMapping(path = "person")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePerson(@RequestBody @Valid Person person){
+    public void updatePerson(@RequestBody @Valid Person person) {
         personService.updatePerson(person);
     }
 
-    @DeleteMapping(path="person")
+    @DeleteMapping(path = "person")
     @ResponseStatus(HttpStatus.RESET_CONTENT)
-    public void deletePerson(@RequestBody @Valid Person person){
+    public void deletePerson(@RequestBody @Valid Person person) {
         personService.deletePerson(person);
     }
 }

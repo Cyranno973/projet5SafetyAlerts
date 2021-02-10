@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Foyer {
     private String address;
-    private List<FirePerson> firePersons ;
+    private List<FirePerson> firePersons;
 
     public String getAddress() {
         return address;

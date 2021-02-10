@@ -6,9 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 public class CalculateAge {
 
-    public static int personAge (String birthdate){
+    public static int personAge(String birthdate) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate birthDate = LocalDate.parse(birthdate,dateTimeFormatter);
+        LocalDate birthDate = LocalDate.parse(birthdate, dateTimeFormatter);
         LocalDate currentDate = LocalDate.now();
         return Period.between(birthDate, currentDate).getYears();
     }

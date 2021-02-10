@@ -34,7 +34,10 @@ public class MedicalRecordController {
         medicalRecordService.deleteMedicalRecord(firestation);
     }
 
-//    @GetMapping(path = "medicalRecord")
-//    @ResponseStatus(HttpStatus.OK)
-//    public List<String> getmedicalRecord() { List<String> medicalrecord = medicalrecordService.getMedicalrecord(); return medicalrecord; }
+    @GetMapping(path = "medicalRecord")
+    @ResponseStatus(HttpStatus.OK)
+    public List<String> getmedicalRecord() {
+        List<String> medicalrecord = medicalRecordService.getMedicalrecord();
+        return medicalrecord;
+    }
 }

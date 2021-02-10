@@ -1,10 +1,10 @@
 package com.steve.safetyAlerts.service;
 
-import com.steve.safetyAlerts.dao.PersonDao;
-import com.steve.safetyAlerts.dto.*;
+import com.steve.safetyAlerts.daoService.PersonDao;
+import com.steve.safetyAlerts.dto.ChildInfo;
+import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.exception.DataAlreadyExistException;
 import com.steve.safetyAlerts.exception.DataNotFoundException;
-import com.steve.safetyAlerts.model.FireStation;
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
@@ -20,7 +20,7 @@ public class PersonServiceImpl implements IPersonService {
 
     @Autowired
     private DataRepository dataRepository;
-    
+
     @Autowired
     private PersonDao personDao;
 
@@ -53,8 +53,8 @@ public class PersonServiceImpl implements IPersonService {
     }
 
     @Override
-    public Set<String> getCommunityEmail(String city) {
-        Set<String> listEmails = new HashSet<String>();
+    public Collection<String> getCommunityEmail(String city) {
+        Collection<String> listEmails = new HashSet<>();
 
         for (Person person : dataRepository.getPersonsByCity(city)) {
             listEmails.add(person.getEmail());

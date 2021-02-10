@@ -1,11 +1,9 @@
-package com.steve.safetyAlerts.dao;
+package com.steve.safetyAlerts.daoService;
 
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.xml.crypto.Data;
 
 @Service
 public class PersonDaoImpl implements PersonDao {

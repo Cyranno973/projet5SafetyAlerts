@@ -115,11 +115,12 @@ public class DataRepository {
                 .filter(person -> person.getAddress().equalsIgnoreCase(address))
                 .collect(Collectors.toList());
     }
+
     /**
      * @param
      * @return Retourne la list de toute les firestation
      */
-    public List<FireStation> getListFirestation(){
+    public List<FireStation> getListFirestation() {
         return database.getFireStations();
     }
 
@@ -144,6 +145,10 @@ public class DataRepository {
             }
         }
         return null;
+    }
+
+    public List<MedicalRecord> getAllMedicalRecord() {
+        return database.getMedicalrecords();
     }
 
     /**

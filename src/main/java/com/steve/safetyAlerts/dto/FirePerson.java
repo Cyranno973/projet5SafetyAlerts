@@ -1,8 +1,5 @@
 package com.steve.safetyAlerts.dto;
 
-import com.steve.safetyAlerts.model.MedicalRecord;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class FirePerson {
@@ -55,9 +52,13 @@ public class FirePerson {
         this.allergies = allergies;
     }
 
-    public int getAge() { return age; }
+    public int getAge() {
+        return age;
+    }
 
-    public void setAge(int age) { this.age = age; }
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public String getStation() {
         return station;

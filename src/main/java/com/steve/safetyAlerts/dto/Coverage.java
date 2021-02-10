@@ -1,14 +1,12 @@
 package com.steve.safetyAlerts.dto;
 
-import java.util.List;
-
 public class Coverage {
-  private String firstName;
-  private String lastname;
-  private String address;
-  private String phone;
-  private int nombreAdulte;
-  private int nombreEnfant;
+    private String firstName;
+    private String lastname;
+    private String address;
+    private String phone;
+    private int nombreAdulte;
+    private int nombreEnfant;
 
     public String getFirstName() {
         return firstName;

@@ -1,4 +1,4 @@
-package com.steve.safetyAlerts.dao;
+package com.steve.safetyAlerts.daoService;
 
 import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.repository.DataRepository;

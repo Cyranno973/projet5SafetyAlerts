@@ -44,10 +44,14 @@ public class FireStationController {
 
     @GetMapping(path = "firestationlist")
     @ResponseStatus(HttpStatus.OK)
-    public List<String> getFirestation() { return fireStationService.getFirestation(); }
+    public List<String> getFirestation() {
+        return fireStationService.getFirestation();
+    }
 
     @GetMapping("fire")
-    public List<FirePerson> getFire(@RequestParam String address) { return fireStationService.getFire(address); }
+    public List<FirePerson> getFire(@RequestParam String address) {
+        return fireStationService.getFire(address);
+    }
 
     @GetMapping(path = "phoneAlert")
     public List<String> getPhoneAlert(@RequestParam String station) {

@@ -1,6 +1,6 @@
 package com.steve.safetyAlerts.service;
 
-import com.steve.safetyAlerts.dao.FirestationDao;
+import com.steve.safetyAlerts.daoService.FirestationDao;
 import com.steve.safetyAlerts.dto.Coverage;
 import com.steve.safetyAlerts.dto.FirePerson;
 import com.steve.safetyAlerts.dto.Foyer;

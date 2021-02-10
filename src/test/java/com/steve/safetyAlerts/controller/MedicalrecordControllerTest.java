@@ -99,7 +99,6 @@ public class MedicalrecordControllerTest {
         mockmvc.perform(MockMvcRequestBuilders.post("/Medicalrecord")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMedicalrecord.toString()))
-                // .andExpect(MockMvcResultMatchers.status().isConflict());
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -123,8 +122,6 @@ public class MedicalrecordControllerTest {
         mockmvc.perform(MockMvcRequestBuilders.put("/Medicalrecord")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMedicalrecord.toString()))
-                // DPANO
-                // .andExpect(MockMvcResultMatchers.status().isNoContent());
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
@@ -145,51 +142,47 @@ public class MedicalrecordControllerTest {
         mockmvc.perform(MockMvcRequestBuilders.put("/Medicalrecord")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonMedicalrecord.toString()))
-                // DPANO
-                // .andExpect(MockMvcResultMatchers.status().isBadRequest());
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
-//    @Test
-//    void updateMedicalrecordWhenMedicalrecordNotFound() throws Exception {
-//
-//        Mockito.doThrow(DataNotFoundException.class).when(medicalrecordService)
-//                .updateMedicalRecord(Mockito.any());
-//
-//        ObjectMapper obm = new ObjectMapper();
-//        ObjectNode jsonMedicalrecord = obm.createObjectNode();
-//
-//        // GIVEN
-//
-//        jsonMedicalrecord.set("firstName", TextNode.valueOf(firstNameTest));
-//        jsonMedicalrecord.set("lastName", TextNode.valueOf(lastNameTest));
-//
-//        // WHEN
-//        // THEN
-//
-//        mockmvc.perform(MockMvcRequestBuilders.put("/Medicalrecord")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(jsonMedicalrecord.toString()))
-//                .andExpect(MockMvcResultMatchers.status().isNotFound());
-//    }
+    @Test
+    void updateMedicalrecordWhenMedicalrecordNotFound() throws Exception {
+
+        Mockito.doThrow(DataNotFoundException.class).when(medicalrecordService)
+                .updateMedicalRecord(Mockito.any());
+
+        ObjectMapper obm = new ObjectMapper();
+        ObjectNode jsonMedicalrecord = obm.createObjectNode();
+
+        // GIVEN
+
+        jsonMedicalrecord.set("firstName", TextNode.valueOf(firstNameTest));
+        jsonMedicalrecord.set("lastName", TextNode.valueOf(lastNameTest));
+
+        // WHEN
+        // THEN
+
+        mockmvc.perform(MockMvcRequestBuilders.put("/Medicalrecord")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMedicalrecord.toString()))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 
     // Controleur "/medicalRecord"
-//
-//    @Test
-//    void getmedicalRecord() throws Exception {
-//
-//        // Etape 1 : on envoie une requête GET
-//        // + on vérifie que le statut de la réponse est 200
-//
-//        mockmvc.perform(MockMvcRequestBuilders.get("/medicalRecord"))
-//                .andExpect(MockMvcResultMatchers.status().isOk());
-//
-//        // Etape 2 : on vérifie que le service a bien été appelé avec les bons
-//        // paramètres
-//
-//        Mockito.verify(medicalrecordService, Mockito.times(1))
-//                .getMedicalRecord();
-//    }
 
+    @Test
+    void getmedicalRecord() throws Exception {
 
+        // Etape 1 : on envoie une requête GET
+        // + on vérifie que le statut de la réponse est 200
+
+        mockmvc.perform(MockMvcRequestBuilders.get("/medicalRecord"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        // Etape 2 : on vérifie que le service a bien été appelé avec les bons
+        // paramètres
+
+        Mockito.verify(medicalrecordService, Mockito.times(1))
+                .getMedicalrecord();
+    }
 }
