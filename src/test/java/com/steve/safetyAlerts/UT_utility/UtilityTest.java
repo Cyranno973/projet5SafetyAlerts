@@ -28,4 +28,3 @@ public class UtilityTest {
         System.out.println(age);
     }
 }
-

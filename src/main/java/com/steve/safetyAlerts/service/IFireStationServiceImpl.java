@@ -31,14 +31,13 @@ public class IFireStationServiceImpl implements IFireStationService {
     @Autowired
     private IFireStationService fireStationService;
 
-
     @Override
     public boolean createFireStation(FireStation fireStation) {
 
         // verification que la fireStation n'existe pas dans la DAO(datarepository)
         if (!StringUtils.isEmpty(fireStation.getStation()) && !StringUtils.isEmpty(fireStation.getAddress())) {
 
-            if (!dataRepository.database.getFireStations().contains(fireStation)) {
+            if (!dataRepository.getListFirestation().contains(fireStation)) {
                 fireStationDao.createFireStation(fireStation);
                 return true;
             } else {

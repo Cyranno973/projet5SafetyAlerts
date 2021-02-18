@@ -13,7 +13,7 @@ public class PersonDaoImpl implements PersonDao {
     @Override
     public boolean createPerson(Person person) {
         // ajout de la nouvelle person en memoire java
-        dataRepository.database.getPersons().add(person);
+        dataRepository.getAllPersons().add(person);
         // commit pour appliquer les changements dans le json
         dataRepository.commit();
         return true;
@@ -21,8 +21,7 @@ public class PersonDaoImpl implements PersonDao {
 
     @Override
     public boolean updatePerson(Person person) {
-        if (dataRepository.database.getPersons().remove(person)) {
-
+        if (dataRepository.getAllPersons().remove(person)) {
             this.createPerson(person);
             return true;
         }
@@ -32,7 +31,7 @@ public class PersonDaoImpl implements PersonDao {
     @Override
     public boolean deletePerson(Person person) {
         // suppression de la person en memeoire
-        boolean result = dataRepository.database.getPersons().remove(person);
+        boolean result = dataRepository.getAllPersons().remove(person);
         // commit pour appliquer les changements dans le json
         dataRepository.commit();
         return result;

@@ -22,7 +22,7 @@ public class IMedicalRecordServiceImpl implements IMedicalRecordService {
     @Override
     public void createMedicalRecord(MedicalRecord medicalRecord) {
         Person person = dataRepository.getPersonByName(medicalRecord.getFirstName(), medicalRecord.getLastName());
-        if (!dataRepository.database.getMedicalrecords().contains(medicalRecord) && (person != null)) {
+        if (!dataRepository.getAllMedicalRecord().contains(medicalRecord) && (person != null)) {
 
             medicalRecordDao.createMedicalRecord(medicalRecord);
         } else {

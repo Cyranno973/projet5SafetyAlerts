@@ -21,7 +21,7 @@ public class DataRepository {
 
     // Il permet de mapper le JSON en objet JAVA
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    public static Database database;
+    private static Database database;
     public String JSON_FILE = "data.json";
     //log4j
     private static final Logger logger = LogManager.getLogger(DataRepository.class);
@@ -30,6 +30,10 @@ public class DataRepository {
 
     public DataRepository() throws IOException {
         this.init();
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 
     /**
@@ -192,4 +196,3 @@ public class DataRepository {
         return personResult;
     }
 }
-

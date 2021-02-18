@@ -16,7 +16,7 @@ public class FirestationDaoImpl implements FirestationDao {
     @Override
     public boolean createFireStation(FireStation fireStation) {
         // ajout de la nouvelle fireStation en memoire java
-        boolean result = dataRepository.database.getFireStations().add(fireStation);
+        boolean result = dataRepository.getListFirestation().add(fireStation);
         // commit pour appliquer les changements dans le json
         dataRepository.commit();
         return result;
@@ -24,7 +24,7 @@ public class FirestationDaoImpl implements FirestationDao {
 
     @Override
     public boolean updateFireStation(FireStation fireStation) {
-        for (FireStation fs : dataRepository.database.getFireStations()) {
+        for (FireStation fs : dataRepository.getListFirestation()) {
 
             if (fs.getAddress().contentEquals(fireStation.getAddress())) {
                 boolean result = deleteFireStation(fs);
@@ -35,7 +35,6 @@ public class FirestationDaoImpl implements FirestationDao {
                 }
             }
         }
-
         return false;
     }
 
@@ -47,7 +46,7 @@ public class FirestationDaoImpl implements FirestationDao {
         // suppressiion by station et address
         if (!"".equals(fireStation.getStation()) && (fireStation.getStation() != null) && (!"".equals(fireStation.getAddress()) && (fireStation.getAddress() != null))) {
 
-            for (FireStation fs : dataRepository.database.getFireStations()) {
+            for (FireStation fs : dataRepository.getDatabase().getFireStations()) {
                 if (fs.getStation().contentEquals(fireStation.getStation()) && (fs.getAddress().contentEquals(fireStation.getAddress()))) {
                     fireStationListDeleted.add(fs);
                 }
@@ -57,7 +56,7 @@ public class FirestationDaoImpl implements FirestationDao {
             // suppressiion by address uniquement
             if (!"".equals(fireStation.getAddress()) && (fireStation.getAddress() != null)) {
 
-                for (FireStation fs : dataRepository.database.getFireStations()) {
+                for (FireStation fs : dataRepository.getDatabase().getFireStations()) {
                     if (fs.getAddress().contentEquals(fireStation.getAddress())) {
                         fireStationListDeleted.add(fs);
                     }
@@ -69,7 +68,7 @@ public class FirestationDaoImpl implements FirestationDao {
 
             if (!"".equals(fireStation.getStation()) && (fireStation.getStation() != null)) {
 
-                for (FireStation fs : dataRepository.database.getFireStations()) {
+                for (FireStation fs : dataRepository.getDatabase().getFireStations()) {
                     if (fs.getStation().contentEquals(fireStation.getStation())) {
                         fireStationListDeleted.add(fs);
                     }
@@ -80,11 +79,10 @@ public class FirestationDaoImpl implements FirestationDao {
         }
 
         // suppression de la fireStation en memoire
-        boolean result = dataRepository.database.getFireStations().removeAll(fireStationListDeleted);
+        boolean result = dataRepository.getDatabase().getFireStations().removeAll(fireStationListDeleted);
         // commit pour appliquer les changements dans le json
         dataRepository.commit();
         return result;
 
     }
 }
-

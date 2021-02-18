@@ -76,7 +76,10 @@
                     <output>file</output>
                     <append>true</append>
                     <excludes>
-                        <exclude>*MethodAccess</exclude>
+                        <exclude>*com/steve/safetyAlerts/repository/**/*</exclude>
+                        <exclude>*com/steve/safetyAlerts/dto/**/*</exclude>
+                        <exclude>*com/steve/safetyAlerts/exception/**/*</exclude>
+                        <exclude>*com/steve/safetyAlerts/*App*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

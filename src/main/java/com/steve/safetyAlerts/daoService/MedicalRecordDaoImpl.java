@@ -13,14 +13,14 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
     @Override
     public boolean createMedicalRecord(MedicalRecord medicalRecord) {
-        dataRepository.database.getMedicalrecords().add(medicalRecord);
+        dataRepository.getAllMedicalRecord().add(medicalRecord);
         dataRepository.commit();
         return true;
     }
 
     @Override
     public boolean updateMedicalRecord(MedicalRecord medicalRecord) {
-        for (MedicalRecord mr : dataRepository.database.getMedicalrecords()) {
+        for (MedicalRecord mr : dataRepository.getAllMedicalRecord()) {
             if (mr.getFirstName().equalsIgnoreCase(medicalRecord.getFirstName()) && (mr.getLastName().equalsIgnoreCase(medicalRecord.getLastName()))) {
                 boolean result = deleteMedicalRecord(mr);
                 if (result) {
@@ -35,7 +35,7 @@ public class MedicalRecordDaoImpl implements MedicalRecordDao {
 
     @Override
     public boolean deleteMedicalRecord(MedicalRecord medicalRecord) {
-        boolean result = dataRepository.database.getMedicalrecords().remove(medicalRecord);
+        boolean result = dataRepository.getAllMedicalRecord().remove(medicalRecord);
         dataRepository.commit();
         return result;
     }
