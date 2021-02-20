@@ -2,9 +2,11 @@ package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.daoService.MedicalRecordDao;
 import com.steve.safetyAlerts.daoService.PersonDao;
+import com.steve.safetyAlerts.dto.PersonInfo;
 import com.steve.safetyAlerts.exception.DataAlreadyExistException;
 import com.steve.safetyAlerts.exception.DataNotFoundException;
 import com.steve.safetyAlerts.exception.InvalidArgumentException;
+import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
 import org.junit.jupiter.api.Assertions;
@@ -17,10 +19,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -50,12 +55,17 @@ public class PersonServiceTest {
     @MockBean
     InvalidArgumentException invalidArgumentException;
 
-    Person obama = new Person("Barack", "obama", "WhiteHouse", "Washinton DC", "1232111", "Obama@mohamed.com", "06755");
-    Person biden = new Person("joe", "biden", "WhiteHouse", "Washinton DC", "1232111", "Obama@mohamed.com", "06755");
-    Person trump = new Person("Donald", "trump", "WhiteHouse", "Washinton DC", "1232111", "Obama@mohamed.com", "06755");
+    Person obama = new Person("Barack", "obama", "WhiteHouse", "Washinton DC", "1232111","06755" , "obama@mohamed.com");
+    Person biden = new Person("joe", "biden", "WhiteHouse", "Washinton DC", "1232111","06754" , "biden@mohamed.com");
+    Person trump = new Person("Donald", "trump", "WhiteHouse", "Washinton DC", "1232111", "06753","trump@mohamed.com");
 
     List<String> medication = List.of("a,b,c,d");
     List<String> allergies = List.of("q,s,d,d");
+
+    MedicalRecord medicalrecordObama = new MedicalRecord("Barack", "obama",
+            "03/06/1984", medication, allergies);
+
+    String cityTest = "Paris";
 
 
     @Test
@@ -154,30 +164,32 @@ public class PersonServiceTest {
     @Test
     public void getPersonTest() throws Exception {
         //Given
-        List<Person> persons = new ArrayList<>();
+        medicalrecordObama.setBirthdate(LocalDate.now().minusYears(30).format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        Mockito.when(dataRepository.getListPersonByName(obama.getFirstName(),obama.getLastName())).thenReturn(List.of(obama));
+        Mockito.when(dataRepository.getMedicalRecordByFirstNameAndLastName(obama.getFirstName(), obama.getLastName())).thenReturn(medicalrecordObama);
         //when
-        Mockito.when(dataRepository.getAllPersons()).thenReturn(persons);
-
+        List<PersonInfo> infos = personServiceTest.getPersonInfo(obama.getFirstName(), obama.getLastName());
         //then
-        Assertions.assertTrue(dataRepository.getAllPersons().add(obama));
-
-        verify(dataRepository, Mockito.times(1)).getAllPersons();
+        assertThat(infos).hasSize(1);
+        PersonInfo infoObama = infos.get(0);
+        assertThat(infoObama.getAge()).isEqualTo(30);
+        assertThat(infoObama.getFirstName()).isEqualTo("Barack");
+        assertThat(infoObama.getLastName()).isEqualTo("obama");
+        assertThat(infoObama.getEmail()).isEqualTo("obama@mohamed.com");
+        assertThat(infoObama.getAddres()).isEqualTo("WhiteHouse");
+        assertThat(infoObama.getAllergies()).isEqualTo(medicalrecordObama.getAllergies());
+        assertThat(infoObama.getMedications()).isEqualTo(medicalrecordObama.getMedications());
     }
 
     @Test
     public void getValidCommunityEmailTest() throws Exception {
 
         //Given
-        Collection<String> emails = new ArrayList<>();
-        emails.add(obama.getEmail());
-        System.out.println(emails);
+        Mockito.when(dataRepository.getPersonsByCity(cityTest)).thenReturn(List.of(obama,biden,trump));
         //when
-        // Mockito.when(personServiceTest.getCommunityEmail(any(String.class))).thenReturn(emails);
-
-        // emails = personServiceTest.getCommunityEmail(obama.getCity());
-
+        Collection<String> emails = personServiceTest.getCommunityEmail(cityTest);
         //then
-        // assertThat(personServiceTest.getCommunityEmail("Culver")).isEqualTo(emails);
+        assertThat(emails).containsExactlyInAnyOrderElementsOf(List.of(obama.getEmail(),biden.getEmail(),trump.getEmail()));
     }
 
 

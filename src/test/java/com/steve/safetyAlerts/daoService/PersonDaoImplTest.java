@@ -2,6 +2,7 @@ package com.steve.safetyAlerts.daoService;
 
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -35,8 +34,7 @@ class PersonDaoImplTest {
 
     @Test
     void createPerson() {
-
-        assertThat(dataRepository.getAllPersons().contains(obama)).isFalse();
+        Assertions.assertFalse(dataRepository.getAllPersons().contains(obama));
         assertThat(personDao.createPerson(obama)).isTrue();
         assertThat(dataRepository.getAllPersons().contains(obama)).isTrue();
     }
@@ -54,7 +52,6 @@ class PersonDaoImplTest {
         assertThat(personDao.deletePerson(obama)).isFalse();
         assertThat(personDao.createPerson(obama)).isTrue();
         assertThat(dataRepository.getAllPersons().contains(obama)).isTrue();
-
         assertThat(personDao.deletePerson(obama)).isTrue();
         assertThat(dataRepository.getAllPersons().contains(obama)).isFalse();
     }
