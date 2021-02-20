@@ -1,10 +1,13 @@
 package com.steve.safetyAlerts.service;
 
 import com.steve.safetyAlerts.daoService.FirestationDaoImpl;
+import com.steve.safetyAlerts.dto.FirePerson;
 import com.steve.safetyAlerts.exception.DataAlreadyExistException;
 import com.steve.safetyAlerts.exception.DataNotFoundException;
 import com.steve.safetyAlerts.exception.InvalidArgumentException;
 import com.steve.safetyAlerts.model.FireStation;
+import com.steve.safetyAlerts.model.MedicalRecord;
+import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +48,20 @@ public class FirestationServiceTest {
     @MockBean
     InvalidArgumentException invalidArgumentException;
 
-    FireStation firestation1 = new FireStation("99", "999 Paris St");
-    FireStation firestation2 = new FireStation("50", "500 Lille St");
+    FireStation firestation1 = new FireStation("WhiteHouse", "1");
+    FireStation firestation2 = new FireStation("BlackHouse", "2");
     FireStation firestationVide = new FireStation("", "");
+
+    Person obama = new Person("Barack", "obama", "WhiteHouse", "Washinton DC", "1232111","06755" , "obama@mohamed.com");
+    Person biden = new Person("joe", "biden", "BlackHouse", "Washinton DC", "1232111","06754" , "biden@mohamed.com");
+    Person trump = new Person("Donald", "trump", "CasinoHouse", "Washinton DC", "1232111", "06753","trump@mohamed.com");
+
+    List<String> medication = List.of("a,b,c,d");
+    List<String> allergies = List.of("q,s,d,d");
+
+    MedicalRecord medicalrecordObama = new MedicalRecord("Barack", "obama",
+            "03/06/1984", medication, allergies);
+
 
     @Test
     public void createExistingFirestationTest() throws Exception {
@@ -184,5 +200,51 @@ public class FirestationServiceTest {
 
         // THEN
         assertThat(fireStationService.getFirestation().size()).isEqualTo(2);
+    }
+
+    @Test
+    void getPhoneAlert() {
+        String station = "1";
+        //given
+        Mockito.when(dataRepository.getFireStationByStation(station)).thenReturn(List.of(firestation1));
+        Mockito.when(dataRepository.getAllPersons()).thenReturn(List.of(obama,biden,trump));
+        //when
+        List<String> phones = fireStationService.getPhoneAlert(station);
+        //then
+        assertThat(phones).isEqualTo(List.of(obama.getPhone()));
+    }
+
+    @Test
+    void getFire() {
+
+        String address = "WhiteHouse";
+        medicalrecordObama.setBirthdate(LocalDate.now().minusYears(30).format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
+        //given
+        Mockito.when(dataRepository.getPersonsByAddress(address)).thenReturn(List.of(obama));
+        Mockito.when(dataRepository.getMedicalRecordByFirstNameAndLastName(obama.getFirstName(), obama.getLastName())).thenReturn(medicalrecordObama);
+        Mockito.when(dataRepository.getStationFireStationByAddress(address)).thenReturn(firestation1);
+        //when
+        List<FirePerson> firestations = fireStationService.getFire(address);
+        //then
+        assertThat(firestations).hasSize(1);
+        FirePerson firePerson = firestations.get(0);
+        assertThat(firePerson.getFirstname()).isEqualTo("Barack");
+        assertThat(firePerson.getLastName()).isEqualTo("obama");
+        assertThat(firePerson.getPhone()).isEqualTo("06755");
+        assertThat(firePerson.getAge()).isEqualTo(30);
+        assertThat(firePerson.getStation()).isEqualTo("1");
+        assertThat(firePerson.getAllergies()).isEqualTo(medicalrecordObama.getAllergies());
+        assertThat(firePerson.getMedications()).isEqualTo(medicalrecordObama.getMedications());
+    }
+
+    @Test
+    void getFloodStation() {
+
+
+    }
+
+    @Test
+    void getCoverageByFireStation() {
+
     }
 }

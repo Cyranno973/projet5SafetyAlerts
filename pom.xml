@@ -70,7 +70,6 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
                 <configuration>
-                    <skip>${maven.test.skip}</skip>
                     <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
                     <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
                     <output>file</output>
@@ -79,6 +78,7 @@
                         <exclude>*com/steve/safetyAlerts/repository/**/*</exclude>
                         <exclude>*com/steve/safetyAlerts/dto/**/*</exclude>
                         <exclude>*com/steve/safetyAlerts/exception/**/*</exclude>
+                        <exclude>*com/steve/safetyAlerts/model/**/*</exclude>
                         <exclude>*com/steve/safetyAlerts/*App*</exclude>
                     </excludes>
                 </configuration>

@@ -1,5 +1,6 @@
 package com.steve.safetyAlerts.service;
 
+import com.steve.safetyAlerts.controller.PersonController;
 import com.steve.safetyAlerts.daoService.PersonDao;
 import com.steve.safetyAlerts.dto.ChildInfo;
 import com.steve.safetyAlerts.dto.PersonInfo;
@@ -9,6 +10,7 @@ import com.steve.safetyAlerts.model.MedicalRecord;
 import com.steve.safetyAlerts.model.Person;
 import com.steve.safetyAlerts.repository.DataRepository;
 import com.steve.safetyAlerts.utility.CalculateAge;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.*;
 @Service
 public class PersonServiceImpl implements IPersonService {
     private int age;
+    private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(PersonServiceImpl.class);
 
     @Autowired
     private DataRepository dataRepository;
@@ -24,14 +27,15 @@ public class PersonServiceImpl implements IPersonService {
     @Autowired
     private PersonDao personDao;
 
-
     @Override
     public boolean createPerson(Person person) {
         // verification que la person n'existe pas dans la DAO(datarepository)
         if (!dataRepository.getAllPersons().contains(person)) {
             personDao.createPerson(person);
+            logger.info("createPerson : laperson à été creer");
             return true;
         } else {
+            logger.error("La personne " + person.getFirstName() + " " + person.getLastName() + "existe déja");
             throw new DataAlreadyExistException("La personne " + person.getFirstName() + " " + person.getLastName() + "existe déja");
         }
     }
@@ -57,6 +61,7 @@ public class PersonServiceImpl implements IPersonService {
         Collection<String> listEmails = new HashSet<>();
 
         for (Person person : dataRepository.getPersonsByCity(city)) {
+            logger.info("getcomminty : ajouts des email dans une liste");
             listEmails.add(person.getEmail());
         }
         return listEmails;
